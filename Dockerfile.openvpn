@@ -14,7 +14,6 @@ RUN apt-get update && apt-get install -y bash wget tar unzip build-essential lib
     ./configure --disable-systemd --enable-async-push --enable-iproute2 && \
     make && make install && \
     cd .. && rm -r openvpn-2.5.3 && rm -r Tunnelblick-3.8.6beta05 && \
-    ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
     wget https://github.com/pashcovich/openvpn-user/releases/download/v1.0.4/openvpn-user-linux-${TARGETARCH}.tar.gz -O - | tar xz -C /usr/local/bin && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
 
