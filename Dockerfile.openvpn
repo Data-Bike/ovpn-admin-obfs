@@ -1,9 +1,23 @@
-FROM alpine:3.16
+FROM ubuntu:18.04@sha256:9bc830af2bef73276515a29aa896eedfa7bdf4bdbc5c1063b4c457a4bbb8cd79
 ARG TARGETARCH
-RUN apk add --update bash openvpn easy-rsa iptables  && \
+
+RUN apt-get update && apt-get install -y bash wget tar unzip build-essential libssl-dev iproute2 liblz4-dev liblzo2-dev libpam0g-dev libpkcs11-helper1-dev libsystemd-dev easy-rsa iptables pkg-config && \
+    wget https://swupdate.openvpn.org/community/releases/openvpn-2.5.3.tar.gz && tar xvf openvpn-2.5.3.tar.gz && \
+    wget https://github.com/Tunnelblick/Tunnelblick/archive/refs/tags/v3.8.6beta05.zip && unzip v3.8.6beta05.zip && \
+    cp Tunnelblick-3.8.6beta05/third_party/sources/openvpn/openvpn-2.5.3/patches/*.diff openvpn-2.5.3 && \
+    cd openvpn-2.5.3 && \
+    patch -p1 < 02-tunnelblick-openvpn_xorpatch-a.diff && \
+    patch -p1 < 03-tunnelblick-openvpn_xorpatch-b.diff && \
+    patch -p1 < 04-tunnelblick-openvpn_xorpatch-c.diff && \
+    patch -p1 < 05-tunnelblick-openvpn_xorpatch-d.diff && \
+    patch -p1 < 06-tunnelblick-openvpn_xorpatch-e.diff && \
+    ./configure --disable-systemd --enable-async-push --enable-iproute2 && \
+    make && make install && \
+    cd .. && rm -r openvpn-2.5.3 && rm -r Tunnelblick-3.8.6beta05 && \
     ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
     wget https://github.com/pashcovich/openvpn-user/releases/download/v1.0.4/openvpn-user-linux-${TARGETARCH}.tar.gz -O - | tar xz -C /usr/local/bin && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
+
 RUN if [ -f "/usr/local/bin/openvpn-user-${TARGETARCH}" ]; then ln -s /usr/local/bin/openvpn-user-${TARGETARCH} /usr/local/bin/openvpn-user; fi
 COPY setup/ /etc/openvpn/setup
 RUN chmod +x /etc/openvpn/setup/configure.sh
