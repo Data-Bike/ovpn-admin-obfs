@@ -2,7 +2,6 @@
 set -ex
 
 apt-get install -y easy-rsa
-chmod a+x /usr/local/bin/*
 
 EASY_RSA_LOC="/etc/openvpn/easyrsa"
 SERVER_CERT="${EASY_RSA_LOC}/pki/issued/server.crt"
