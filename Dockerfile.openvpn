@@ -1,8 +1,8 @@
 FROM ubuntu:18.04@sha256:9bc830af2bef73276515a29aa896eedfa7bdf4bdbc5c1063b4c457a4bbb8cd79
 ARG TARGETARCH
 
-RUN apt-get update && apt-get install -y bash wget tar unzip build-essential libssl-dev iproute2 liblz4-dev liblzo2-dev libpam0g-dev libpkcs11-helper1-dev libsystemd-dev easy-rsa iptables pkg-config && \
-    wget https://swupdate.openvpn.org/community/releases/openvpn-2.5.3.tar.gz && tar xvf openvpn-2.5.3.tar.gz && \
+RUN apt-get update && apt-get install -y bash wget tar unzip build-essential libssl-dev iproute2 liblz4-dev liblzo2-dev libpam0g-dev libpkcs11-helper1-dev libsystemd-dev easy-rsa iptables pkg-config
+RUN wget https://swupdate.openvpn.org/community/releases/openvpn-2.5.3.tar.gz && tar xvf openvpn-2.5.3.tar.gz && \
     wget https://github.com/Tunnelblick/Tunnelblick/archive/refs/tags/v3.8.6beta05.zip && unzip v3.8.6beta05.zip && \
     cp Tunnelblick-3.8.6beta05/third_party/sources/openvpn/openvpn-2.5.3/patches/*.diff openvpn-2.5.3 && \
     cd openvpn-2.5.3 && \
