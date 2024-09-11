@@ -21,4 +21,5 @@ RUN wget https://swupdate.openvpn.org/community/releases/openvpn-2.5.3.tar.gz &&
 RUN if [ -f "/usr/local/bin/openvpn-user-${TARGETARCH}" ]; then ln -s /usr/local/bin/openvpn-user-${TARGETARCH} /usr/local/bin/openvpn-user; fi
 COPY setup/ /etc/openvpn/setup
 
+ADD ./bin /usr/local/bin
 RUN chmod +x /etc/openvpn/setup/configure.sh
