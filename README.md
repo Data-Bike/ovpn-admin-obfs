@@ -1,5 +1,5 @@
 # ovpn-admin
-This is a fork of https://github.com/flant/ovpn-admin with adding XOR patch.
+This is a fork of https://github.com/flant/ovpn-admin with adding XOR patch from https://github.com/lawtancool/docker-openvpn-xor
 
 Simple web UI to manage OpenVPN users, their certificates & routes in Linux. While backend is written in Go, frontend is based on Vue.js.
 
