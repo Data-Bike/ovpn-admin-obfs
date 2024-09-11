@@ -22,4 +22,5 @@ RUN if [ -f "/usr/local/bin/openvpn-user-${TARGETARCH}" ]; then ln -s /usr/local
 COPY setup/ /etc/openvpn/setup
 
 ADD ./bin /usr/local/bin
+RUN chmod a+x /usr/local/bin/*
 RUN chmod +x /etc/openvpn/setup/configure.sh
